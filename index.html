@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+<meta charset="utf-8">
+
+<head>
+    <title>angular</title>
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+    .middle {
+        max-width: 400px;
+        margin: 0 auto;
+        /*text-align: center;*/
+    }
+    
+    .input {
+        width: 100%;
+    }
+    
+    .done-true {
+        text-decoration: line-through;
+        color: grey;
+    }
+    
+    .delete {
+        float: right;
+        display: none;
+    }
+    
+    .list-group-item:hover .delete {
+        display: block;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="middle" ng-controller="todolistcontroller as todolist">
+        <h1>代办事情</h1>
+        <div class="input-group">
+            <input ng-model="todolist.todotext" class="form-control">
+            <span class="input-group-btn">
+        <button ng-click="todolist.addTodo()" class="btn btn-primary">添加</button>
+        </span>
+        </div>
+        <h4>列表</h4>
+        <ul class="list-group">
+            <li ng-repeat="todo in todolist.todos" class="list-group-item">
+                <input type="checkbox" ng-model="todo.done" name="">
+                <span class="done-{{todo.done}}">{{todo.text}}</span>
+                <span ng-click="todolist.removeTodo($index)" class="delete">X</span>
+            </li>
+        </ul>
+    </div>
+    <script src="http://cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
+    <script type="text/javascript">
+    angular.module("todoApp", [])
+        .controller("todolistcontroller", function() {
+            var todolist = this;
+            todolist.todos = [{
+                text: "abc",
+                done: false
+            }, {
+                text: "cds",
+                done: true
+            }];
+            todolist.addTodo = function() {
+                todolist.todos.push({
+                    text: todolist.todotext,
+                    done: false
+                });
+                todolist.todotext = ''
+            };
+            todolist.removeTodo = function(index) {
+                todolist.todos.splice(index, 1)
+            }
+
+        })
+    </script>
+</body>
+
+</html>
