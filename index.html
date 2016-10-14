@@ -50,6 +50,9 @@
             </li>
         </ul>
     </div>
+    <hello></hello>
+    <div enter>asdfa</div>
+    <div ng-controller="httptest"></div>
     <script src="http://cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
     <script type="text/javascript">
     angular.module("todoApp", [])
@@ -73,6 +76,37 @@
                 todolist.todos.splice(index, 1)
             }
 
+        })
+        // $http  get
+        .controller("httptest", function($http) {
+            var req = {
+                method: 'GET',
+                url: 'http://apis.baidu.com/apistore/weatherservice/recentweathers?cityname=濮阳',
+                headers: {
+                    'apikey': "e4288f19fe0231d205fd43745d7b15fe"
+                }
+
+            }
+
+            $http(req).success(function(res) {
+                console.log(res)
+            })
+        })
+        .directive("hello", function() {
+            return {
+                restrict: "E",
+                replace: true,
+                template: "<div>hello angular</div>"
+            }
+        })
+        .directive("enter", function() {
+            return function(scope, element, attrs) {
+                console.log(element);
+                // element可以用jQuery方法
+                element.bind('mouseenter', function() {
+                    console.log("jineu")
+                })
+            }
         })
     </script>
 </body>
